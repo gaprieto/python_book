@@ -1,0 +1,943 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Plotting}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{gruxe1ficas-de-datos}{%
+\section{Gráficas de datos}\label{gruxe1ficas-de-datos}}
+
+Una de las grandes ventajas de aprender programación en Python a
+diferencia de Fortran o C/C++, es que Python tiene paquetes para generar
+figuras de alta calidad (aunque yo recomiendo aprender igual Fortran o
+C/C++). El poder de los paquetes de graficas en Python es mucho mayor a
+lo que se puede presentar en este curso y es su trabajo aprender más de
+lo que se muestra acá.
+
+Lo primero, es tener claro que una figura debe tener toda la información
+necesaria para que cualquier persona que la vea lo pueda enender. Por
+eso, cada eje debe estar descrito, y si se tienen más de un tipo de
+datos, se debe explicar que significa cada uno. Para la presentación de
+resultados científicos y especialmente en geociencias, es importante
+generar figuras que muestren la información de manera correcta, veraz y
+con buena resolución. No es aceptable entregar figuras sin ejes
+explicados, o escalas si es necesario.
+
+Por último, aunque se muestran algunos ejemplos de figuras en 3D, éstas
+en muchos casos (aunque bonitas) no son útiles para presentar la
+información. Las páginas de revistas o la pantalla del computador es 2D,
+por lo que no es fácil ver la tercera dimensión. A veces es mejor un
+mapa de contornos, que mostrar la topografía en 3D en una figura.
+
+El paquete que se utilizará es matplotlib y específicamente pyplot. Como
+referencia se puede encontrar en https://matplotlib.org. Para la
+generación de mapas vamos a utilizar cartopy
+https://scitools.org.uk/cartopy/docs/latest/
+
+    \hypertarget{graficas-1d2d}{%
+\section{Graficas 1D/2D}\label{graficas-1d2d}}
+
+En el primer ejemplo, se muestra una figura con varios arreglos de datos
+y la forma de graficarlos en una sola figura. En esto se puede ver la
+forma de generar diferentes tipos de líneas, la leyenda y poner los
+límites para uno de los ejes. Finalmente, como se puede guardar la
+figura a un formato definido, que en este caso es un .png. Otros
+formatos incluyen .ps, .eps, .pdf, .svg, etc.
+
+En los ejemplos de abajo, los comandos plt.savefig y plt.show() no se
+muestran para evitar ocupar demasiado espacio. Los códigos completos (en
+la página del curso) si muestran todos los comandos.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{} plot\PYZus{}lines.py}
+         \PY{c+c1}{\PYZsh{} Example of simple line plotting}
+         
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         
+         \PY{n}{x}  \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{10.}\PY{p}{,} \PY{l+m+mf}{10.}\PY{p}{,} \PY{n}{num}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n}{y1} \PY{o}{=} \PY{n}{x}\PY{o}{*}\PY{l+m+mi}{0} \PY{o}{+} \PY{l+m+mi}{1}
+         \PY{n}{y2} \PY{o}{=} \PY{l+m+mf}{0.2}\PY{o}{*}\PY{n}{x} \PY{o}{+} \PY{l+m+mf}{0.1}
+         \PY{n}{y3} \PY{o}{=} \PY{l+m+mf}{0.05}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+} \PY{l+m+mf}{0.1}\PY{o}{*}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{l+m+mf}{0.1}
+         \PY{n}{y4} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.002}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3} \PY{o}{+} \PY{l+m+mf}{0.01}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{l+m+mf}{0.05}\PY{o}{*}\PY{n}{x} \PY{o}{+} \PY{l+m+mf}{0.1}
+         \PY{n}{y5} \PY{o}{=} \PY{o}{+}\PY{l+m+mf}{1e\PYZhy{}4}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{4} \PY{o}{+}\PY{l+m+mf}{0.002}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3} \PY{o}{+} \PY{l+m+mf}{0.01}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{l+m+mf}{0.05}\PY{o}{*}\PY{n}{x} \PY{o}{+} \PY{l+m+mf}{0.1}
+         
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y1}\PY{p}{,}\PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZca{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y2}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y3}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y4}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y5}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X vs Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fig1.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_2_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Los formatos de las líneas y de los markers es muy variada y está por
+fuera del objetivo del curso. Una explicación más precisa se puede
+encontrar en la documentación de matplotlib. El espesor de la línea, el
+relleno de los símbolos, etc. se puede cambiar.
+
+Como se muestra en el ejemplo anterior, se muestra un número de comandos
+para generar la figura (plt.plot) con escala lineal-lineal, aunque
+también se puede usar semilogx o semilogy o loglog. Se puede adicionar
+texto a cada eje, título de la figura, leyenda de los símbolos y
+finalmente guardar la figura y mostrar la figura en pantalla.
+
+    \hypertarget{subplots-y-barras-de-error}{%
+\subsection{Subplots y barras de
+error}\label{subplots-y-barras-de-error}}
+
+    En el siguiente ejemplo se muestra el uso de figuras para mostrar datos
+reales, con barras de error. La idea es mostrar una serie de datos (que
+pueden representar datos tomados en campo) en función de la posición
+(x). La Figura 7.2 muestra dos paneles (ver comando plt.subplots), uno
+con los datos brutos (datos con errores aleatorios) y una curva que
+representa el modelo que representa los datos. Sin embargo, en la vida
+real cada dato tiene una incertidumbre que muchas veces se representa
+con una barra de error (por ejemplo mostrando el \(\pm \sigma\)). Esto
+se puede mostrar con el comando \texttt{plt.errorbar(x,y,yerr=yerr)}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{c+c1}{\PYZsh{} plot\PYZus{}errorbar.py}
+         \PY{c+c1}{\PYZsh{} Simple code to plot some data with }
+         \PY{c+c1}{\PYZsh{} error bars, and synthetic curve}
+         
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         
+         \PY{n}{N}    \PY{o}{=} \PY{l+m+mi}{20}
+         \PY{n}{x}    \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{n}{N}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{4}
+         \PY{n}{x}    \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n}{sig}  \PY{o}{=} \PY{l+m+mf}{0.01} \PY{o}{+} \PY{l+m+mf}{0.1}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n}{yerr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{n}{N}\PY{p}{)}\PY{o}{*}\PY{n}{sig} 
+         \PY{n}{y}    \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{)} \PY{o}{+} \PY{n}{yerr}
+         
+         \PY{n}{x0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{4.0}\PY{p}{)}
+         \PY{n}{y0}   \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{x0}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Plot the data}
+         
+         \PY{n}{f}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
+         
+         \PY{n}{ax1} \PY{o}{=} \PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x0}\PY{p}{,}\PY{n}{y0}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}ylim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.2} \PY{p}{,} \PY{l+m+mf}{1.1}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{ax2} \PY{o}{=} \PY{n}{axs}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{errorbar}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,}\PY{n}{yerr}\PY{o}{=}\PY{n}{sig}\PY{p}{,}\PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x0}\PY{p}{,}\PY{n}{y0}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{yaxis}\PY{o}{.}\PY{n}{tick\PYZus{}right}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{yaxis}\PY{o}{.}\PY{n}{set\PYZus{}label\PYZus{}position}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylim}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.2} \PY{p}{,} \PY{l+m+mf}{1.1}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fig2.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} 
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    El código plot\_errorbar.py muestra otra forma de trabajar con los
+módulos de gráficas de Python. Note que primero se genera una figura con
+subpaneles \texttt{plt.subplots}, donde se genera una variable axs que
+se usa para generar las figuras de cada subpanel, usando
+\texttt{ax1\ =\ axs{[}0{]}}, para el panel 1, y
+\texttt{ax2\ =\ axs{[}1{]}} para el segundo panel.
+
+Para definir el título de las figuras, los ejes, etc, se usa otra forma
+de comandos para definirlos, como se ve en
+
+\begin{verbatim}
+ax2.set_xlabel(’X’)
+ax2.yaxis.tick_right()
+ax2.yaxis.set_label_position("right")
+ax2.set_ylabel(’Y’)
+ax2.set_ylim([-0.2 , 1.1])
+\end{verbatim}
+
+donde incluso se puede poner la posición del eje \texttt{Y} al lado
+derecho, para hacer la figura más legible.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{c+c1}{\PYZsh{}}
+         \PY{c+c1}{\PYZsh{} Gráfica de una serie de Fourier for boxcar}
+         \PY{c+c1}{\PYZsh{}}
+         
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         
+         \PY{c+c1}{\PYZsh{} Create X vector}
+         \PY{n}{pi} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{pi}
+         \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{pi}\PY{p}{,}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{101}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Exact boxcar}
+         \PY{n}{f} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}
+         \PY{n}{iloc} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argwhere}\PY{p}{(}\PY{n}{x}\PY{o}{\PYZlt{}}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{f}\PY{p}{[}\PY{n}{iloc}\PY{p}{]} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+         
+         \PY{c+c1}{\PYZsh{} Different odd terms of sin function}
+         \PY{n}{s01} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n}{s03} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{3.}
+         \PY{n}{s05} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{l+m+mi}{5}\PY{o}{*}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{5.}
+         \PY{n}{s07} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{l+m+mi}{7}\PY{o}{*}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{7.}
+         \PY{n}{s09} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{l+m+mi}{9}\PY{o}{*}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{9.}
+         \PY{n}{s11} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{l+m+mi}{11}\PY{o}{*}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{11.}
+         
+         \PY{c+c1}{\PYZsh{} Function of Fourier series}
+         \PY{n}{y1} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{4}\PY{o}{/}\PY{n}{pi}\PY{p}{)}\PY{o}{*} \PY{p}{(}\PY{n}{s01}\PY{o}{+}\PY{n}{s03}\PY{p}{)}
+         \PY{n}{y2} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{4}\PY{o}{/}\PY{n}{pi}\PY{p}{)}\PY{o}{*} \PY{p}{(}\PY{n}{s01}\PY{o}{+}\PY{n}{s03}\PY{o}{+}\PY{n}{s05}\PY{o}{+}\PY{n}{s07}\PY{p}{)}
+         \PY{n}{y3} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{4}\PY{o}{/}\PY{n}{pi}\PY{p}{)}\PY{o}{*} \PY{p}{(}\PY{n}{s01}\PY{o}{+}\PY{n}{s03}\PY{o}{+}\PY{n}{s05}\PY{o}{+}\PY{n}{s07}\PY{o}{+}\PY{n}{s09}\PY{o}{+}\PY{n}{s11}\PY{p}{)}
+         
+         
+         \PY{c+c1}{\PYZsh{} Plot}
+         \PY{n}{fig}  \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{111}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{f}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}  \PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Boxcar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y1}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2 terms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y2}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{4 terms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y3}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b:}\PY{l+s+s1}{\PYZsq{}} \PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{6 terms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{sum\PYZus{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{i=1\PYZcb{}\PYZca{}}\PY{l+s+si}{\PYZob{}N\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{frac}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{sin(i*x)\PYZcb{}}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+s1}{\PYZdl{} for \PYZdl{}i\PYZdl{} odd}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fouriewr series sum}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{fig}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fig\PYZus{}boxcar.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{histogramas}{%
+\subsection{Histogramas}\label{histogramas}}
+
+Finalmente un ejemplo para mostrar una distribución de una serie de
+datos, que muestra por ejemplo si los datos tienen una distribución
+normal (gaussiana) y de otro tipo. La figura muestra un histograma de
+los datos y una cruva de una distribución normal.
+
+El comando en este caso es \texttt{hist(X,bins=25,\ normed=True)} que
+muestra el histograma de los datos dividida en 25 bins para el rango de
+los datos. Se han removido los valores de los ejes.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{} plot\PYZus{}histogram.py}
+         \PY{c+c1}{\PYZsh{} A simple histogram examples}
+         
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         
+         
+         \PY{n}{rd} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{RandomState}\PY{p}{(}\PY{p}{)}
+         \PY{n}{X} \PY{o}{=} \PY{n}{rd}\PY{o}{.}\PY{n}{randn}\PY{p}{(}\PY{l+m+mi}{10000}\PY{p}{)}
+         
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{density}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{l+m+mi}{1} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{)} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}yticks}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fig3.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} 
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{going-back-to-our-tp-data}{%
+\section{Going back to our T/P data}\label{going-back-to-our-tp-data}}
+
+For work in class
+
+Take the metadata (\texttt{BASIN\_CHARACTERISTICS.CSV}) with the
+location information of each site and plot a map with the station
+locations.
+
+Select one of the stations, and plot the temperature and precipitation
+data in anopther figure.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{c+c1}{\PYZsh{}}
+         \PY{c+c1}{\PYZsh{} Reading CSV table with T and P data, and station information. }
+         \PY{c+c1}{\PYZsh{}}
+         
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{cartopy}\PY{n+nn}{.}\PY{n+nn}{crs} \PY{k}{as} \PY{n+nn}{ccrs}
+         
+         \PY{c+c1}{\PYZsh{} Data file names}
+         \PY{n}{Tfile}    \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MON\PYZus{}T\PYZus{}CRU\PYZus{}19012015.csv}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{Pfile}    \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MON\PYZus{}P\PYZus{}CRU\PYZus{}19012015.csv}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{sta\PYZus{}file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BASIN\PYZus{}CHARACTERISTICS.csv}\PY{l+s+s1}{\PYZsq{}}
+         
+         \PY{c+c1}{\PYZsh{} Read data files}
+         \PY{n}{basin} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{sta\PYZus{}file}\PY{p}{,}\PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{Temp}  \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{Tfile}\PY{p}{,}\PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{Prec}  \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{Pfile}\PY{p}{,}\PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}}
+         \PY{c+c1}{\PYZsh{} Organize data files}
+         \PY{c+c1}{\PYZsh{}}
+         
+         \PY{c+c1}{\PYZsh{} Site column}
+         \PY{n}{Tsite} \PY{o}{=} \PY{n}{Temp}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{Psite} \PY{o}{=} \PY{n}{Prec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Data columns}
+         \PY{n}{T} \PY{o}{=} \PY{n}{Temp}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}
+         \PY{n}{P} \PY{o}{=} \PY{n}{Prec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}
+         
+         \PY{n}{sta}  \PY{o}{=} \PY{n}{basin}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{lon}  \PY{o}{=} \PY{n}{basin}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{lat}  \PY{o}{=} \PY{n}{basin}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}
+         \PY{n}{area} \PY{o}{=} \PY{n}{basin}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}
+         \PY{n}{elev} \PY{o}{=} \PY{n}{basin}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Confirm, stations are all the same order. }
+         \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Tsite}\PY{o}{\PYZhy{}}\PY{n}{sta}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{Psite}\PY{o}{\PYZhy{}}\PY{n}{sta}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Select station}
+         \PY{n}{ista} \PY{o}{=} \PY{l+m+mi}{20}
+         
+         \PY{c+c1}{\PYZsh{} Figure with the map}
+         
+         \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax}  \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{projection}\PY{o}{=}\PY{n}{ccrs}\PY{o}{.}\PY{n}{PlateCarree}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}extent}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{180}\PY{p}{,} \PY{l+m+mi}{180}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{90}\PY{p}{,} \PY{l+m+mi}{90}\PY{p}{]}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}ax.stock\PYZus{}img()}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{coastlines}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{lon}\PY{p}{,}\PY{n}{lat}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k\PYZca{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{lon}\PY{p}{[}\PY{n}{ista}\PY{p}{]}\PY{p}{,}\PY{n}{lat}\PY{p}{[}\PY{n}{ista}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r\PYZca{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Figure with the time series}
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:red}\PY{l+s+s1}{\PYZsq{}}
+         \PY{c+c1}{\PYZsh{}ax1.set\PYZus{}xlabel(\PYZsq{}time (s)\PYZsq{})}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{color}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{T}\PY{p}{[}\PY{n}{ista}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{color}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{tick\PYZus{}params}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labelcolor}\PY{o}{=}\PY{n}{color}\PY{p}{)}
+         
+         \PY{n}{ax2} \PY{o}{=} \PY{n}{ax1}\PY{o}{.}\PY{n}{twinx}\PY{p}{(}\PY{p}{)}  \PY{c+c1}{\PYZsh{} instantiate a second axes that shares the same x\PYZhy{}axis}
+         
+         \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Precipitation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{color}\PY{p}{)}  \PY{c+c1}{\PYZsh{} we already handled the x\PYZhy{}label with ax1}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{P}\PY{p}{[}\PY{n}{ista}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{color}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{tick\PYZus{}params}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labelcolor}\PY{o}{=}\PY{n}{color}\PY{p}{)}
+         
+         \PY{n}{fig}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}  \PY{c+c1}{\PYZsh{} otherwise the right y\PYZhy{}label is slightly clipped}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}xlim}\PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{,} \PY{l+m+mi}{1200}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         
+         
+         \PY{c+c1}{\PYZsh{} Figure with the time series}
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:red}\PY{l+s+s1}{\PYZsq{}}
+         \PY{c+c1}{\PYZsh{}ax1.set\PYZus{}xlabel(\PYZsq{}time (s)\PYZsq{})}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{color}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{T}\PY{p}{[}\PY{n}{ista}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{color}\PY{p}{)}
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{tick\PYZus{}params}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labelcolor}\PY{o}{=}\PY{n}{color}\PY{p}{)}
+         
+         \PY{n}{ax2} \PY{o}{=} \PY{n}{ax1}\PY{o}{.}\PY{n}{twinx}\PY{p}{(}\PY{p}{)}  \PY{c+c1}{\PYZsh{} instantiate a second axes that shares the same x\PYZhy{}axis}
+         
+         \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tab:blue}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Precipitation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{color}\PY{p}{)}  \PY{c+c1}{\PYZsh{} we already handled the x\PYZhy{}label with ax1}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{P}\PY{p}{[}\PY{n}{ista}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{color}\PY{p}{)}
+         \PY{n}{ax2}\PY{o}{.}\PY{n}{tick\PYZus{}params}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labelcolor}\PY{o}{=}\PY{n}{color}\PY{p}{)}
+         
+         \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}xlim}\PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{,} \PY{l+m+mi}{1200}\PY{p}{)}
+         
+         \PY{n}{fig}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}  \PY{c+c1}{\PYZsh{} otherwise the right y\PYZhy{}label is slightly clipped}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.0
+0.0
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{gruxe1ficas-2d3d}{%
+\section{Gráficas 2D/3D}\label{gruxe1ficas-2d3d}}
+
+En Geociencias, muchas veces se toman datos en la superficie de la
+Tierra y se quieren mostrar en mapa o en sección cruzada o en figura 3D.
+Sin embargo, es importante tener en cuenta que las figuras en 3D muchas
+veces no son muy útiles para mostrar los datos. En los siguientes
+ejemplos muestro 3-4 formas de presentar unos datos z tomados en la
+posición x y y donde z puede representar por ejemplo altura, alguna
+anomalía geofísica, contenido de SiO2, etc.
+
+La figura muestra una figura tipo scatter donde cada punto representa un
+dato tomado en campo con tres valores \texttt{x\ y\ z}. La figura
+muestra la posición \texttt{(x,y)} y en color el valor correspondiente a
+\texttt{z}.
+
+\hypertarget{nota}{%
+\paragraph{NOTA}\label{nota}}
+
+La figura muestra la suma de dos montículos gaussianos, uno con un pico
+muy alto. Si la escala de colores de z es lineal, la figura muestra sólo
+un pico. En cambio, si se usa una escala de colores logarítmica
+(norm=cm.LogNorm()), si se puede observar mucho mejor la tendencia de
+los dos montículos.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{c+c1}{\PYZsh{} plot\PYZus{}scatter.py}
+         
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{colors} \PY{k}{as} \PY{n+nn}{cm}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{mlab} \PY{k}{as} \PY{n+nn}{ml}
+         
+         \PY{n}{N} \PY{o}{=} \PY{l+m+mi}{2000}
+         \PY{n}{x} \PY{o}{=} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{n}{N}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{6}
+         \PY{n}{y} \PY{o}{=} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{n}{N}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{4}
+         
+         \PY{n}{z1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{mean} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cov} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mf}{0.2}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mf}{0.25}\PY{p}{,} \PY{l+m+mf}{0.50}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+m+mi}{100000}\PY{p}{)}
+         
+         \PY{n}{z} \PY{o}{=} \PY{p}{(}\PY{n}{ml}\PY{o}{.}\PY{n}{bivariate\PYZus{}normal}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mf}{0.2}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}
+              \PY{o}{+} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{ml}\PY{o}{.}\PY{n}{bivariate\PYZus{}normal}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{z} \PY{o}{=} \PY{n}{z}\PY{o}{+}\PY{l+m+mf}{1e\PYZhy{}5}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{212}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{z}\PY{p}{,} \PY{n}{norm}\PY{o}{=}\PY{n}{cm}\PY{o}{.}\PY{n}{LogNorm}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{winter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log color scale}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{211}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{z}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{winter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{p}{)}
+         \PY{n}{frame1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}
+         \PY{n}{frame1}\PY{o}{.}\PY{n}{axes}\PY{o}{.}\PY{n}{get\PYZus{}xaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}ticks}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear color scale}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fig4.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/Applications/anaconda3/lib/python3.6/site-packages/ipykernel\_launcher.py:12: MatplotlibDeprecationWarning: The bivariate\_normal function was deprecated in Matplotlib 2.2 and will be removed in 3.1.
+  if sys.path[0] == '':
+/Applications/anaconda3/lib/python3.6/site-packages/ipykernel\_launcher.py:13: MatplotlibDeprecationWarning: The bivariate\_normal function was deprecated in Matplotlib 2.2 and will be removed in 3.1.
+  del sys.path[0]
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    El código \texttt{plot\_scatter.py} muestra el uso de
+\texttt{plt.scatter}, que en realidad es una forma de mostrar unos datos
+con tres dimensiones en plano 2D. Python tiene la opción para hacer
+figuras tipo scatter en 3D también, aunque su uso no lo recomiendo,
+porque no muestra los datos con facilidad.
+
+Como último ejemplo, se muestra el uso de contornos o superficies en
+2D/3D. Las figuras siguientes muestran los mismos datos de la figura de
+scatter pero que fueron tomados en una grilla constante y no aleatoria.
+Aunque esto no es lo que uno esperaría obtener en campo (es difícil
+hacer una grilla perfecta), se requeriría utilizar códigos para
+interpolación que se puede obtener en varios paquetes de Python (pero
+que está más allá de lo que se busca en este capítulo).
+
+En la primera figura se muestra los contornos para la variable
+\texttt{z}, con curvas de nivel marcadas, o con curvas de nivel rellenas
+con colores proporcionales a la altura. Note que en este caso se muestra
+\texttt{z} en escala logarítmica.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{c+c1}{\PYZsh{} plot\PYZus{}contour.py}
+         
+         \PY{k+kn}{from} \PY{n+nn}{mpl\PYZus{}toolkits}\PY{n+nn}{.}\PY{n+nn}{mplot3d} \PY{k}{import} \PY{n}{Axes3D}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{colors} \PY{k}{as} \PY{n+nn}{cm}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{mlab} \PY{k}{as} \PY{n+nn}{ml}
+         
+         \PY{n}{delta} \PY{o}{=} \PY{l+m+mf}{0.025}
+         \PY{n}{x}     \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{3.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{,}\PY{n}{delta}\PY{p}{)}
+         \PY{n}{y}     \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{2.0}\PY{p}{,} \PY{n}{delta}\PY{p}{)}
+         \PY{n}{X}\PY{p}{,} \PY{n}{Y}  \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{)}
+         
+         
+         \PY{n}{z} \PY{o}{=} \PY{p}{(}\PY{n}{ml}\PY{o}{.}\PY{n}{bivariate\PYZus{}normal}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mf}{0.2}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}
+              \PY{o}{+} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{ml}\PY{o}{.}\PY{n}{bivariate\PYZus{}normal}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{)}\PY{p}{)}
+         \PY{n}{z} \PY{o}{=} \PY{n}{z}\PY{o}{+}\PY{l+m+mf}{1e\PYZhy{}5}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{212}\PY{p}{)}
+         \PY{n}{CS} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{contourf}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{,} \PY{n}{z}\PY{p}{,}\PY{n}{norm}\PY{o}{=}\PY{n}{cm}\PY{o}{.}\PY{n}{LogNorm}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Contour filled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{211}\PY{p}{)}
+         \PY{n}{CS} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{contour}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{,} \PY{n}{z}\PY{p}{,}\PY{n}{norm}\PY{o}{=}\PY{n}{cm}\PY{o}{.}\PY{n}{LogNorm}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{colors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{clabel}\PY{p}{(}\PY{n}{CS}\PY{p}{,}\PY{n}{inline}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,}\PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}4.1e}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{frame1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}
+         \PY{n}{frame1}\PY{o}{.}\PY{n}{axes}\PY{o}{.}\PY{n}{get\PYZus{}xaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}ticks}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Contour plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fig5.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{fig}  \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax}   \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{n}{projection}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{surf} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot\PYZus{}surface}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{log10}\PY{p}{(}\PY{n}{z}\PY{p}{)}\PY{p}{,}\PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{terrain}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Surface log10(Z)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fig6.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/Applications/anaconda3/lib/python3.6/site-packages/ipykernel\_launcher.py:15: MatplotlibDeprecationWarning: The bivariate\_normal function was deprecated in Matplotlib 2.2 and will be removed in 3.1.
+  from ipykernel import kernelapp as app
+/Applications/anaconda3/lib/python3.6/site-packages/ipykernel\_launcher.py:16: MatplotlibDeprecationWarning: The bivariate\_normal function was deprecated in Matplotlib 2.2 and will be removed in 3.1.
+  app.launch\_new\_instance()
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{going-back-to-our-tp-data-2}{%
+\section{Going back to our T/P data
+2}\label{going-back-to-our-tp-data-2}}
+
+For work in class
+
+With the data already read, plot the average Temperature in your
+preferred color scale, for all sites, for the month of january, in map
+view. Notice you can use \emph{scatter} plots or something similar. But
+note you need to take the average temperature.
+
+Make a second plot for the month of June instead.
+
+Describe the patterns you see.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}65}]:} \PY{c+c1}{\PYZsh{}}
+         \PY{c+c1}{\PYZsh{} Reading CSV table with T and P data, and station information. }
+         \PY{c+c1}{\PYZsh{}}
+         
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{cartopy}\PY{n+nn}{.}\PY{n+nn}{crs} \PY{k}{as} \PY{n+nn}{ccrs}
+         
+         \PY{c+c1}{\PYZsh{} Data file names}
+         \PY{n}{Tfile}    \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MON\PYZus{}T\PYZus{}CRU\PYZus{}19012015.csv}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{Pfile}    \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MON\PYZus{}P\PYZus{}CRU\PYZus{}19012015.csv}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{sta\PYZus{}file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BASIN\PYZus{}CHARACTERISTICS.csv}\PY{l+s+s1}{\PYZsq{}}
+         
+         \PY{c+c1}{\PYZsh{} Read data files}
+         \PY{n}{basin} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{sta\PYZus{}file}\PY{p}{,}\PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{Temp}  \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{Tfile}\PY{p}{,}\PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{Prec}  \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{Pfile}\PY{p}{,}\PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}}
+         \PY{c+c1}{\PYZsh{} Organize data files}
+         \PY{c+c1}{\PYZsh{}}
+         
+         \PY{c+c1}{\PYZsh{} Site column}
+         \PY{n}{Tsite} \PY{o}{=} \PY{n}{Temp}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{Psite} \PY{o}{=} \PY{n}{Prec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Data columns}
+         \PY{n}{T} \PY{o}{=} \PY{n}{Temp}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}
+         \PY{n}{P} \PY{o}{=} \PY{n}{Prec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}
+         
+         \PY{n}{sta}  \PY{o}{=} \PY{n}{basin}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{lon}  \PY{o}{=} \PY{n}{basin}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n}{lat}  \PY{o}{=} \PY{n}{basin}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}
+         \PY{n}{area} \PY{o}{=} \PY{n}{basin}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}
+         \PY{n}{elev} \PY{o}{=} \PY{n}{basin}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]}
+         
+         \PY{n}{T01} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{T}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{p}{:}\PY{l+m+mi}{12}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{T07} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{T}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{:}\PY{p}{:}\PY{l+m+mi}{12}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{T}\PY{o}{.}\PY{n}{shape}\PY{p}{,}\PY{n}{T01}\PY{o}{.}\PY{n}{shape}\PY{p}{,}\PY{n}{T01}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Figure with the map}
+         
+         \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax}  \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{projection}\PY{o}{=}\PY{n}{ccrs}\PY{o}{.}\PY{n}{PlateCarree}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}extent}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{180}\PY{p}{,} \PY{l+m+mi}{180}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{90}\PY{p}{,} \PY{l+m+mi}{90}\PY{p}{]}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}ax.stock\PYZus{}img()}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{coastlines}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{lon}\PY{p}{,}\PY{n}{lat}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{T01}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rainbow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{clim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{n}{fraction}\PY{o}{=}\PY{l+m+mf}{0.04}\PY{p}{,}\PY{n}{pad}\PY{o}{=}\PY{l+m+mf}{0.04}\PY{p}{)}
+         
+         \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax}  \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{projection}\PY{o}{=}\PY{n}{ccrs}\PY{o}{.}\PY{n}{PlateCarree}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}extent}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{180}\PY{p}{,} \PY{l+m+mi}{180}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{90}\PY{p}{,} \PY{l+m+mi}{90}\PY{p}{]}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}ax.stock\PYZus{}img()}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{coastlines}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{lon}\PY{p}{,}\PY{n}{lat}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{T06}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rainbow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{clim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{)}\PY{p}{;}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{n}{fraction}\PY{o}{=}\PY{l+m+mf}{0.04}\PY{p}{,}\PY{n}{pad}\PY{o}{=}\PY{l+m+mf}{0.04}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(2673, 1380) (2673,) [25.70956522 25.5426087  23.93826087 {\ldots} -8.74033913 -4.9920687
+ -7.54403478]
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}65}]:} <matplotlib.colorbar.Colorbar at 0xb1ff0e208>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
