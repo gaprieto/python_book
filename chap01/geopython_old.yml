@@ -1,24 +1,24 @@
 name: geopython
+
 channels:
   - conda-forge
   - defaults
-  - gprieto
 
 dependencies:
   - python=3.7
-  - numpy=1.21
+  - numpy
   - scipy
   - pandas
   - ipython
   - jupyterlab
+  - jupyter
   - pip
   - matplotlib
   - netcdf4
   - packaging
-  - gmt=6.3
+  - gmt
   - pygmt
   - obspy=1.2
   - pyasdf
   - cartopy
-  - multitaper
 
